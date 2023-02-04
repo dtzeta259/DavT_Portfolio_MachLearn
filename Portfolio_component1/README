@@ -1,0 +1,13 @@
+Portfolio Component 1: Data Exploration
+
+This program will read the Boston.csv file and reproduce some of the same functions
+as the built-in functions in R Studio. There are 7 functions in total, with six of them 
+calculating the following statistics: sum, mean, median, range, correlation, and covariance. The remaining function will print out the results of the calculations
+for the data.
+
+The Boston.csv file will be read in by the program and will be parsed and set as
+part of 2 different vectors, for both columns of data: rm and medv. Once parsed and
+assigned into their respective vectors, the data is calculated for both vectors separately. 
+The covariance and correlation is calculated using both vectors. Once 
+finished, the program will print the results onto the console.
+
