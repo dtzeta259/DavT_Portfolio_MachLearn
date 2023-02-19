@@ -1,0 +1,121 @@
+---
+  title: "Portfolio Project 2: Regression File"
+  author: "David Teran & HuyNguyen" 
+  
+  editor_options:
+  markdown:
+    
+    wrap: 72
+  output: pdf_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+Classification
+
+This notebook will use a dataset consisting of 10k or more rows of data
+and will create classification models based on the dataset.
+
+Created by David Teran & Huy Nguyen on February 15, 2023
+
+Linear models for classifications create decision boundaries to divide
+the observations into classes. Some strengths to logistic regression is that it can separates classes if they are linearly separable, computationally inexpensive, and nice probabilistic output. The main weakness for logistic regression is it is likely to underfit the data.
+
+First, Read in the dataset to use
+
+```{r ClassData}
+#install.packages('e1071', dependencies=TRUE)
+ClassData <- read.csv("heart_data.csv", na.strings = "NA", header = TRUE)
+data(ClassData)
+#attach(ClassData)
+str(ClassData)
+
+```
+
+Dividing Data into train/test sets
+
+```{r}
+set.seed(1234)
+i <- sample(1:nrow(ClassData), nrow(ClassData)*0.80, replace=FALSE)
+train <- ClassData[i,]
+test <- ClassData[-i,]
+```
+
+Using 5 R functions for data exploration Changing some data types to
+boolean values
+
+```{r}
+train$smoke <- as.factor(train$smoke)
+train$alco <- as.factor(train$alco)
+train$active <- as.factor(train$active)
+train$cardio <- as.factor(train$cardio)
+
+test$smoke <- as.factor(test$smoke)
+test$alco <- as.factor(test$alco)
+test$active <- as.factor(test$active)
+test$cardio <- as.factor(test$cardio)
+
+summary(train)
+names(train)
+cor(train$weight, train$height)
+var(train$weight)
+range(train$weight)
+
+```
+
+Creating Tables
+
+```{r}
+plot(train$weight, train$height)
+hist(train$age)
+```
+
+Building the logistic regression model
+
+```{r}
+glmHeart <- glm(cardio~., data=train, family="binomial")
+summary(glmHeart)
+```
+
+The coefficients quantifies the difference in the log odds of the target variable.
+The null deviance measures the lack of fit of the model, considering the intercept. Residual deviance is measures the lack of fir for the entire model. Ideally we would want to see the residual deviance much lower than the null deviance. In our model, the residual deviance is lower than the null deviance but there is probably room for improvement. 
+
+Building naive Bayes model
+
+```{r}
+library(e1071)
+nbHeart <- naiveBayes(cardio~., data=train)
+nbHeart
+```
+
+A-priori is supposed to show us how likely it is to have cardiovascular disease. Our model shows it as a 50/50 chance to have cardiovascular disease which does not sound correct. The tables below that show the likelihood data as conditional probabilities. For discrete variables like smoke, alco, and active, it shows the percentages in decimal of how if they have cardiovascular disease or not based on if they smoke, drink alcohol, or are active. The rest are continuous variables so it will show the mean and standard deviation.  
+
+Predicting and Evaluating on test data
+
+```{r}
+probs <- predict(glmHeart, newdata = test, type = "response")
+predHeart <- ifelse(probs>0.5, 1, 0)
+acc <- mean(predHeart==test$cardio)
+print(paste("accuracy = ", acc))
+table(predHeart, test$cardio)
+
+
+predTest <- predict(nbHeart, newdata = test, type = "class")
+table(predTest, test$cardio)
+mean(predTest==test$cardio)
+
+
+```
+
+Compare the results and indicate why you think these results happened
+Ideally the predHeart and predTest values would be the same. We did not get this result this is probably because maybe we made the wrong decisions when calculating these values or maybe because the dataset does not fit this model or is too large.
+
+Strengths of Naive Bayes is that it works well in smaller data sets, easy to implement and interpret, and handles high dimensions well.
+The weaknesses of Naive Bayes is that it is outperformed by other classifiers for larger data sets, predictions are made from the training data, and that the naive assumption that they are independent may not fit the data.
+
+
+Accuracy is the most common metric to check results. This is the best to tell if a class was miss classified. Kappa tries to adjust accuracy to account for correct predictions by chance. This is used to quantify agreement between two annotators of data. ROC curve is a visualization of performance of the algorithm. This shows the trade off between predicting true positives while also avoiding false positives. The AUC is the area under the curve and this can be us gauge how well it classified the values with 0.5 being the worst and 1 being the best classification.

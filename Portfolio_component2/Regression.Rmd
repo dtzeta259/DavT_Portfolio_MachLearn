@@ -1,0 +1,177 @@
+---
+  title: "Portfolio Project 2: Regression File"
+  author: "David Teran & HuyNguyen" 
+  
+  editor_options:
+  markdown:
+    
+    wrap: 72
+  output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+Linear Regression
+
+This notebook will use a dataset consisting of 10k or more rows of data
+and will plot out a linear regression. First, dividing the data into 80/20
+train/test blocks, then create 3 different linear regression models.
+
+Created  by David Teran & Huy Nguyen on February 15, 2023
+
+Linear Regression has us trying to find a target quantitative value using one or more predictors.
+Some strengths are that it works well when the data follows a linear pattern and has low variance.
+The main weakness it has is that it has a high bias because it tries to fit into a linear shape.
+
+First, Read in the dataset to use and clean it of empty data
+
+```{r TestData}
+TestData <- read.csv("car details v4.csv", na.strings = "NA", header = TRUE)
+TestData <- TestData[c('Make','Model','Price','Year','Kilometer')]
+data(TestData)
+str(TestData)
+#colSums(is.na.data.frame(TestData))
+TestData <- na.omit(TestData)
+```
+
+
+Dividing Data into train/test sets
+```{r}
+set.seed(1234)
+i <- sample(1:nrow(TestData), nrow(TestData)*0.80, replace=FALSE)
+train <- TestData[i,]
+test <- TestData[-i,]
+```
+
+Using 5  or R functions for data exploration
+
+```{r}
+
+summary(train)
+names(train)
+
+# train$Price <- as.numeric(train$Price)
+# train$Year <- as.numeric(train$Year)
+# train$Kilometer <- as.numeric(train$Kilometer)
+# 
+# test$Price <- as.numeric(test$Price)
+# test$Year <- as.numeric(test$Year)
+# test$Kilometer <- as.numeric(test$Kilometer)
+
+print(paste("Correlations: "))
+print(paste(""))
+cor(train$Year, train$Price)
+cor(train$Kilometer, train$Price)
+
+var(train$Price)
+head(train)
+tail(train)
+mean(train$Price)
+mean(train$Kilometer)
+range(train$Kilometer)
+range(train$Price)
+
+```
+
+Creating informative graphs using training data
+```{r}
+plot(train$Year, train$Price)
+hist(train$Year)
+```
+
+Building simple linear regression model
+```{r}
+lmPrice <- lm(Price~Year, data = train)
+summary(lmPrice)
+
+```
+Write a thorough explanation of the information in the model summary.
+
+The model summary for the linear regression model presents several different
+metrics used concerning model. The estimated coefficients of the intercept and the year
+value are given along with the standard error, t-value, and p-values. The standard
+error gives an estimate of the variation in the coefficient value. The p-value helps
+indicate if there exists a relationship between the predictor and the target variable.
+The residual standard error is 2432000 on 1645 degrees of freedom, indicating how far off
+the model was from the data, which for the data and predictors used is quite off. The multiple r-squared is 0.09334, meaning that not much of the variance in Price is predicted by the Year. The F-statistic indicates that the Price and Year variables are good predictors.
+
+
+Plot out residuals
+```{r}
+par(mfrow=c(2,2))
+plot(lmPrice)
+```
+write a thorough explanation of what the residual plot tells you
+
+The residual plots will help determine how well a model will represent the data
+from this dataset. The residuals vs fitted plot model will reveal any non-linear
+patterns from the residuals, which in this data set, the plots are mostly declining
+and bunched up on the far right of the graph, similar to a negative linear association.
+The normal Q-Q shows whether the residuals deviate much or very little, which in this data does not deviate much in the beginning and curves upward halfway, meanning it deviates sharply at some point. Scale-location shows if the residuals are distributed equally
+along the range of the predictors, so in this dataset, the values are not spread as equally along the predictors. The last plot, residual vs. leverage, indicating whether if there are
+any outliers in the data present, which for this dataset there are only a few observations that have a large distance between the rest of the data but still within the Cook's distance lines.
+
+Building a multiple linear regression model
+```{r}
+lmforecast <- lm(Price~Year + Kilometer, data = train)
+summary(lmforecast)
+
+
+par(mfrow=c(2,2))
+plot(lmforecast)
+
+
+```
+
+Build out a third linear regression model to try and improve results
+```{r}
+lmPoly <- lm(Price~Kilometer + I(Kilometer^2), data = train)
+summary(lmPoly)
+
+
+par(mfrow=c(2,2))
+plot(lmPoly)
+```
+
+Write a paragraph or more comparing the results. Indicate which model is better and
+why you think that is the case.
+
+All three models illustrated the patterns and distribution of data observations in the dataset used for the single, multiple, and polynomial linear regression models. Comparing all three models based on the plots produced and the values from the coefficients, residual standard error, r-squared, and F-statistic, the third model is the one that gave the better results. The third model, which is the polynomial linear regression model, has a lower r-squared value in comparison to the other models, and low p-value and low residual value. However, even with the lower values, there isn't much improvement in all three plots.
+
+Predict and evaluate with test data
+```{r}
+
+pred1 <- predict(lmPrice, newdata = test)
+pred1 <- exp(pred1)
+cor1 <- cor(pred1, test$Price)
+mse1 <- mean((pred1-test$Price)^2)
+rmse1 <- sqrt(mse1)
+
+print(paste("correlation: ", cor1))
+print(paste("mse: ", mse1))
+print(paste("rse: ", rmse1))
+
+pred2 <- predict(lmforecast, newdata = test)
+pred2 <- exp(pred2)
+cor2 <- cor(pred2, test$Kilometer)
+mse2 <- mean((pred2-test$Kilometer)^2)
+rmse2 <- sqrt(mse2)
+
+print(paste("correlation: ", cor2))
+print(paste("mse: ", mse2))
+print(paste("rse: ", rmse2))
+
+pred3 <- predict(lmPoly, newdata = test)
+pred3 <- exp(pred3)
+cor3 <- cor(pred3, test$Price)
+mse3 <- mean((pred3-test$Price)^2)
+rmse3 <- sqrt(mse3)
+
+print(paste("correlation: ", cor3))
+print(paste("mse: ", mse3))
+print(paste("rse: ", rmse3))
+```
+The results returned from the prediction and evaluation of the three models show that this dataset has some issues in the data itself, considering it is returning NaN and Inf values for correlation and mse and rse. For correlation, this indicates a calculation done in the prediction and evaluation tests. For the mse and rse, there might have been some values present that cause the mse and rse to run infinitely. Overall, its possible that there might be issues in the method of collecting data for the set.
