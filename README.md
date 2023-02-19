@@ -8,3 +8,9 @@ Access to doc: [Overview_ML](https://github.com/dtzeta259/DavT_Portfolio_MachLea
 ## Data Exploration
 C++ program to reproduce the built-in functions of data statistics in R. A good review for
 programming in C++. Access to Code and Doc: [Data_Correlation](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Portfolio_component1/data_exploration_Component1.cpp), [Data_Correlation_Doc](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Portfolio_component1/data_exploration_document.pdf).
+
+## Linear Models
+Two R Notebooks created to read and analyze two different datasets via linear regression,
+logistic regression, and Naive Bayes models. Once read in, data cleaned, and analyzed, a 
+prediction and evaluation of the data is done to see how accurate and varied the data is.
+Access to Notebooks and PDF Files: [Regression in R](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Portfolio_component2/Regression.Rmd), [Regression PDF](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Portfolio_component2/Regression.pdf), [Classification in R](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Portfolio_component2/Classification.Rmd), [Classification PDF](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Portfolio_component2/Classification.pdf)
