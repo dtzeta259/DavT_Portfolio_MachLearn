@@ -10,7 +10,7 @@
  * sensitivity, and specificity will also be called. Once done, the test metrics and run time
  * for the algorithm will be printed out.s 
  * 
- * Created by David Teran and Huy Nguyen on February 20, 2023 for CS4375 Intro to Machine Learning
+ * Created by David Teran on February 20, 2023 for CS4375 Intro to Machine Learning
  * 
  */
 
