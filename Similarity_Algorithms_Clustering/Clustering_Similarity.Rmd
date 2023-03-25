@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 Created by David Teran on March 20, 2023
 
-Clustering
+##Clustering
 
 This R Notebook will be using a dataset with more than 10K rows of data and will implement two clustering algorithms, grouping data into similar groups. The two clustering methods implemented will be k-means and hierarchical clustering, to which a model-based approach for the two methods will be taken for clustering the dataset. 
 
@@ -106,7 +106,6 @@ With k now known, the k-means clustering algorithm can be performed.The data wil
 ```{r}
 set.seed(1234)
 testClust <- kmeans(dataClust, 2, nstart=25)
-testClust
 ```
 Once the optimal model has been selected, then a model analysis can be done, using the size and the centers of the k-means to cross tabulate to see if we can find an agreement. Then it is possible to quantify the agreement between the value randomly assigned and the cluster by using the Rand index. The closer it is to 1, the greater the agreement. The closer it is to -1, the lower the agreement. However, if the Rand index is closer to 0, it means the clustering was done randomly.
 
@@ -114,6 +113,8 @@ Once the optimal model has been selected, then a model analysis can be done, usi
 #Show the size and centers of the clusters of data
 testClust$size
 testClust$centers
+testClust$withinss #within sum of squares
+testClust$tot.withinss #within sum of squares by cluster
 ```
 
 We can also try a small plot graph comparing certain columns of data to see if the clusters form
@@ -122,11 +123,10 @@ plot(dataClust$Flight.Distance, dataClust$Departure.Arrival.time.convenient, pch
 [unclass(testClust$cluster)], main="Airline Passenger Satisfaction Data")
 ```
 
+Now to obtain the Rand Index for the k-means clustering.
 ```{r}
-#Cross-tabulate data???
 aggregate(dataClust, by=list(cluster=testClust$cluster), mean)
-ct.km <- table(dataClust$Flight.Distance, testClust$cluster)
-ct.km
+ct.km <- table(dataClust$Departure.Arrival.time.convenient, testClust$cluster)
 
 #Quantify Agreement
 library(flexclust)
@@ -174,11 +174,23 @@ We can then use Mclust function to select the optimal model and plot the results
 
 # Model Based Clustering
 library(mclust)
-# fitBIC <-mclustBIC(hier1)
-# plot(fitBIC, what = "BIC") # plot results
-# summary(fitBIC) # display the best model
+fitBIC <-mclustBIC(hier1)
+plot(fitBIC, what = "BIC") # plot results
+summary(fitBIC) # display the best model
 
-fitClass <-Mclust(hier1)
+fitClass <-Mclust(hier1[,1:5])
+plot(fitClass, what = "classification") # plot results
+summary(fitClass, parameters=TRUE) # display the best model
+
+fitClass <-Mclust(hier1[,6:10])
+plot(fitClass, what = "classification") # plot results
+summary(fitClass, parameters=TRUE) # display the best model
+
+fitClass <-Mclust(hier1[,11:15])
+plot(fitClass, what = "classification") # plot results
+summary(fitClass, parameters=TRUE) # display the best model
+
+fitClass <-Mclust(hier1[,16:23])
 plot(fitClass, what = "classification") # plot results
 summary(fitClass, parameters=TRUE) # display the best model
 
