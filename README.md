@@ -19,3 +19,10 @@ Access to Notebooks and PDF Files: [Regression in R](https://github.com/dtzeta25
 Two C++ programs that implement logistic regression and Naive Bayes
 algorithms from scratch using the titanic dataset provided.
 Access to Code andc Files: [Logistic Regression C++](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Portfolio_component3/LogisticRegression_Part1.cpp), [Naive Bayes C++](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Portfolio_component3/NaiveBayes_Part2.cpp), [ML Algorithms C++ Overview](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Portfolio_component3/ML%20Algorithms%20from%20Scratch%20Overview.pdf)
+
+## Simularity Algorithms:  Clustering
+R Notebook that will read and analyze a dataset on airline passenger satisfaction
+using three different clustering approaches: K-means, Hierarchical, and Model-based. Using
+these three approaches, a most optimal model can be obtained along with the optimal
+number of clusters. 
+Access to Notebook and PDF: [Clustering Notebook](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Similarity_Algorithms_Clustering/Clustering_Similarity.Rmd), [Clustering PDF]()
