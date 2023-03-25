@@ -25,4 +25,4 @@ R Notebook that will read and analyze a dataset on airline passenger satisfactio
 using three different clustering approaches: K-means, Hierarchical, and Model-based. Using
 these three approaches, a most optimal model can be obtained along with the optimal
 number of clusters. 
-Access to Notebook and PDF: [Clustering Notebook](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Similarity_Algorithms_Clustering/Clustering_Similarity.Rmd), [Clustering PDF]()
+Access to Notebook and PDF: [Clustering Notebook](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Similarity_Algorithms_Clustering/Clustering_Similarity.Rmd), [Clustering PDF](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Similarity_Algorithms_Clustering/Clustering_Similarity.pdf)
