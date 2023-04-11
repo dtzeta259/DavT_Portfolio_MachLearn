@@ -37,4 +37,4 @@ Series of learning algorithms that improve the accurracy and the mcc (Matthew's 
 
 ##ML with Sklearn
 A Python Notebook created in Google Colab, demonstrating how Python is used in Machine
-Learning, using the sklearn, Numpy, seaborn, and pandas libraries. [Python ML PDF}(https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/PythonML/skLearn_Notebook.ipynb%20-%20Colaboratory.pdf), [Python Notebook](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/PythonML/skLearn_Notebook%20(1).ipynb)
+Learning, using the sklearn, Numpy, seaborn, and pandas libraries. [Python ML PDF](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/PythonML/skLearn_Notebook.ipynb%20-%20Colaboratory.pdf), [Python Notebook](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/PythonML/skLearn_Notebook%20(1).ipynb)
