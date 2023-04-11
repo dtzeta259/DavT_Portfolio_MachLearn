@@ -1,0 +1,151 @@
+---
+  title: "Ensemble Learning"
+  author: "David Teran" 
+  editor_options:
+    markdown: 
+      wrap: 72
+  markdown:
+    
+    wrap: 72
+  output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+Created by David Teran on March 30, 2023
+
+##Ensemble Learning
+
+This R Notebook will be using classification data from a previous R project. With that data, we will be making improvements on the data using 2 of the 4 ensemble methods of learning. The 4 methods are Random Forest, Bagging, AdaBoost, and XGBoost. For this project, the Random Forest and AdaBoost will be used to see if the accuracy of the data can be improved.
+
+First, the classification dataset from a previous R project must be read in and cleaned of any NA or zero values, before attempting to run any of the ensemble learning methods. 
+```{r}
+#Read the dataset in
+current_path = rstudioapi::getActiveDocumentContext()$path
+setwd(dirname(current_path ))
+classData1 <- read.csv("train.csv")
+classData2 <- read.csv("test.csv")
+classData <- rbind(classData1, classData2)
+
+#Summary of NA or 0 values
+print(colSums(is.na(classData)))
+print(sapply(classData, function(y) sum(length(which(y==0)))))
+```
+Now we clean the data and drop any NA's and 0' along with any unneeded columns. Also, any data must also be normalized to properly run the algorithms on it.
+```{r}
+#Drop unneeded Columns
+classData <- classData[,-1:-2]
+
+#Preparing Data
+head(classData)
+data(classData)
+names(classData)
+
+#Convert data columns to numeric data
+classData$Gender <- ifelse(classData$Gender=="Female", 1, 0)
+classData$Customer.Type <- ifelse(classData$Customer.Type=="Local Customer", 1, 0)
+classData$Type.of.Travel <- ifelse(classData$Type.of.Travel=="Business travel", 1, 0)
+classData$Class[classData$Class == "Eco"] <- 0
+classData$Class[classData$Class == "Eco Plus"] <- 1
+classData$Class[classData$Class == "Business"] <- 2
+
+#Remove 0's
+classData <- na.omit(classData) #Clear missing data
+classData <- classData[!(is.na(classData$Arrival.Delay.in.Minutes)),]
+
+#Normalizing Data
+classData$Class <- as.numeric(classData$Class) 
+classData$satisfaction <- as.factor(classData$satisfaction)
+
+
+classData <- classData[!(classData$Gate.location==0),]
+classData <- classData[!(classData$Food.and.drink==0),]
+classData <- classData[!(classData$Online.boarding==0),]
+classData <- classData[!(classData$Seat.comfort==0),]
+classData <- classData[!(classData$Inflight.entertainment==0),]
+classData <- classData[!(classData$On.board.service==0),]
+classData <- classData[!(classData$Leg.room.service==0),]
+classData <- classData[!(classData$Checkin.service==0),]
+classData <- classData[!(classData$Inflight.service==0),]
+classData <- classData[!(classData$Cleanliness==0),]
+classData <- classData[!(classData$Departure.Arrival.time.convenient==0),]
+classData <- classData[!(classData$Departure.Delay.in.Minutes==0),]
+classData <- classData[!(classData$Arrival.Delay.in.Minutes==0),]
+classData <- classData[!(classData$Inflight.wifi.service==0),]
+classData <- classData[!(classData$Ease.of.Online.booking==0),]
+
+#Convert to Factors
+classData$satisfaction<-as.factor(classData$satisfaction)
+
+```
+
+
+Once the data has been cleared of NA and 0 values, the data is then split into train/test data using an 80/20 split.
+
+```{r}
+set.seed(1234)
+i <- sample(1:nrow(classData), nrow(classData)*0.80, replace=FALSE)
+train <- classData[i,]
+test <- classData[-i,]
+```
+
+Having split the data, we then run logistic regression to set up the baseline for the accuracy and Matthew's Correlation Coefficient (mcc) to account for any differences in class distribution. 
+
+```{r}
+glmPass <- glm(satisfaction~., data=train, family="binomial")
+summary(glmPass)
+```
+
+With the Logistic regression model created, along with a summary printed, we can check for accuracy and mcc.
+
+```{r}
+library(mltools)
+probs <- predict(glmPass, newdata=test, type="response")
+pred <- ifelse(probs>0.5, 2, 1)
+accuracy <- mean(pred==as.integer(test$satisfaction))
+mcc1 <- mcc(pred, as.integer(test$satisfaction))
+print(paste("accuracy=", accuracy))
+print(paste("mcc=", mcc1))
+```
+From here, we can run the random forest algorithm to see if the accuracy and mcc values improve with the current logistic regression as the baseline.
+
+```{r}
+library(randomForest)
+set.seed(1234)
+randomF1 <- randomForest(satisfaction~., data=train, importance=TRUE)
+summary(randomF1)
+```
+
+
+```{r}
+pred <- predict(randomF1, newdata=test, type="response")
+accuracyF1 <- mean(pred==test$satisfaction)
+mccF1 <- mcc(factor(pred), test$satisfaction)
+print(paste("accuracy=", accuracyF1))
+print(paste("mcc=", mccF1))
+```
+
+With the random forest ensemble learning model completed, there is a difference between logistic regression and random forest, where random forest does have a higher accuracy and mcc value. 
+
+Next is to try increasing the accuracy and mcc values with AdaBoost.
+```{r}
+library(adabag)
+library(ggplot2)
+adaBoostData <- boosting(satisfaction~., data=train, boos=TRUE, mfinal=20, coeflearn='Breiman')
+summary(adaBoostData)
+```
+
+
+```{r}
+pred <- predict(adaBoostData, newdata=test, type="response")
+accAda <- mean(pred$class==test$satisfaction)
+mccAda <- mcc(factor(pred$class), test$satisfaction)
+print(paste("accuracy=", accAda))
+print(paste("mcc=", mccAda))
+```
+
+From here, we can see that AdaBoost does fairly well, while still better than logistic regression. It is much faster in runtime compared to random forest, which does take longer than either logistic regression and AdaBoost
+
+Overall, ensemble learning does provide a better experience in obtaining accuracy with some additional efficiency. The difference between the three is that AdaBoost is faster than logistic regression and random forest. As for accuracy and mcc values, random forest seems to do better than both logistic regression and AdaBoost, with AdaBoost having a lower mcc value than random forest, but still better than linear regression.
