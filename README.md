@@ -38,3 +38,9 @@ Series of learning algorithms that improve the accurracy and the mcc (Matthew's 
 ##ML with Sklearn
 A Python Notebook created in Google Colab, demonstrating how Python is used in Machine
 Learning, using the sklearn, Numpy, seaborn, and pandas libraries. [Python ML PDF](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/PythonML/skLearn_Notebook.ipynb%20-%20Colaboratory.pdf), [Python Notebook](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/PythonML/skLearn_Notebook%20(1).ipynb)
+
+##Image Classification
+Python Notebook created in Google Colab, which implement image classification of a image-based dataset using
+Keras. Using a satellite image dataset, several different models are implemented to predict whether the image 
+is of the water or not. These models are: Sequential, Convolutional Neural Network, and Transferred Learning.
+[Image Classification PDF](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Image_classification/Image_Classification_Keras.pdf), [Image Classification Notebook](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Image_classification/Keras_notebook%20(1).ipynb)
