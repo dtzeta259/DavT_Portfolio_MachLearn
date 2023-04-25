@@ -32,14 +32,14 @@ Access to Notebook and PDFs: [Clustering Notebook](https://github.com/dtzeta259/
 [Dimensionality Reduction PDF](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Similarity_Algorithms_Clustering/dim_red.pdf),
 [Narrative PDF](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Similarity_Algorithms_Clustering/CS%204375.004%20-%20Searching%20for%20Similarities.pdf)
 
-##Ensemble Data
+## Ensemble Data
 Series of learning algorithms that improve the accurracy and the mcc (Matthew's correlation coefficient), which are Bagging, Random Forest, AdaBoost, and XGBoost. For this one, Random Forest and AdaBoost is used out of the four ensemble learning algorithms. [Ensemble Learning PDF](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Ensemble%20Data/Ensemble_Data.pdf), [Ensemble Notebook](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Ensemble%20Data/Ensemble_Data.Rmd)
 
-##ML with Sklearn
+## ML with Sklearn
 A Python Notebook created in Google Colab, demonstrating how Python is used in Machine
 Learning, using the sklearn, Numpy, seaborn, and pandas libraries. [Python ML PDF](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/PythonML/skLearn_Notebook.ipynb%20-%20Colaboratory.pdf), [Python Notebook](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/PythonML/skLearn_Notebook%20(1).ipynb)
 
-##Image Classification
+## Image Classification
 Python Notebook created in Google Colab, which implement image classification of a image-based dataset using
 Keras. Using a satellite image dataset, several different models are implemented to predict whether the image 
 is of the water or not. These models are: Sequential, Convolutional Neural Network, and Transferred Learning.
