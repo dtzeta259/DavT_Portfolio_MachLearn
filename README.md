@@ -1,6 +1,9 @@
 # DavT_Portfolio_MachLearn
 Portfolio for CS4375 Machine Learning Class
 
+## Portfolio Summary
+This portfolio includes projects that have been completed in the duration of taking this machine learning class. Overall, it showed me the different aspects of machine learning and its applications as well as helped me learn and develop skills, such as data analysis, creating and analyzing algorithms, and learning R and Python. I do plan on creating some personal projects to help me improve and understand machine learning and the algorithms used. I plan on keeping up with the field by keeping up with any news and new developments and implement them to learn with some practical experience. I do have interest in any possible employment opportunities if any available to put into practice what I learned.
+
 ## Overview of Machine Learning
 A summary of machine learning and some of the important element in machine learning.
 Access to doc: [Overview_ML](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Overview_ML.pdf).
