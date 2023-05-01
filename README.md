@@ -10,7 +10,7 @@ Access to doc: [Overview_ML](https://github.com/dtzeta259/DavT_Portfolio_MachLea
 
 ## Data Exploration
 C++ program to reproduce the built-in functions of data statistics in R. A good review for
-programming in C++. Access to Code and Doc: [Data_Correlation](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Portfolio_component1/data_exploration_Component1.cpp), [Data_Correlation_Doc](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Portfolio_component1/data_exploration_document.pdf).
+programming in C++. Access to Code and Doc: [Data_Correlation](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Portfolio_component1/data_exploration_Component1.cpp), [Data_Correlation_Doc](https://github.com/dtzeta259/DavT_Portfolio_MachLearn/blob/main/Portfolio_component1/data_exploration_overview.pdf).
 
 ## Linear Models
 Two R Notebooks created to read and analyze two different datasets via linear regression,
